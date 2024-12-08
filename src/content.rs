@@ -1,3 +1,5 @@
+// src/content.rs
+// The "content" module contains functions for creating the table of contents and individual story files. The create_table_of_contents function generates a table of contents file based on the extracted stories. The create_story_files function creates individual story files based on the extracted contents. These functions are used in the main shrive function to process the input file and generate the output files.
 use std::fs;
 use std::io::{self, BufRead, Write};
 use std::path::{Path, PathBuf};

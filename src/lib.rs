@@ -1,3 +1,5 @@
+// src/lib.rs
+// "shrive" is a command-line tool that processes text files and generates a table of contents and individual story files. The tool reads a text file, extracts the table of contents, and creates a folder in the output directory based on the file name. The folder name is derived from the input file name, with spaces and underscores replaced by spaces and the first letter of each word capitalized. The tool then generates a table of contents file and individual story files based on the extracted contents.
 use rfd::FileDialog;
 use std::fs::File;
 use std::io::{self, BufRead};

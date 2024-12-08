@@ -1,3 +1,5 @@
+// src/output_dir.rs
+// The "output_dir" module contains a function for creating a folder in the output directory based on the input file name. The create_folder_in_output_dir function takes the input file path, extracts the file name, removes the .txt extension, transforms the casing, and creates a folder with the derived name in the "src/output" directory. The function returns the path to the created folder.
 use std::fs;
 use std::io;
 use std::path::{Path, PathBuf};

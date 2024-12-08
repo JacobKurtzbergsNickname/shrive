@@ -6,3 +6,7 @@ edition = "2021"
 [dependencies]
 regex = "1.5.4"
 rfd = "0.10.0"
+pyo3 = { version = "0.18", features = ["extension-module"] }
+
+[lib]
+crate-type = ["cdylib"]
