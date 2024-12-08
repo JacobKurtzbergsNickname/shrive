@@ -9,7 +9,7 @@ description = "A Python package built with Rust using PyO3"  # Short description
 authors = [
     {name = "Kirby", email = "korbinian.brunner@web.de"}
 ]
-license = "MIT"  # Your license
+license = { text = "MIT" }
 readme = "README.md"  # Path to your README
 requires-python = ">=3.7"
 classifiers = [

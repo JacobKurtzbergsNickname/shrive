@@ -1,1 +1,12 @@
 /target
+
+# Ignore virtual environment directories
+venv/
+.env/
+
+# Ignore build artifacts
+*.egg-info/
+*.egg
+*.whl
+dist/
+build/
