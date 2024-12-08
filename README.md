@@ -21,3 +21,9 @@ After the watchdog, I'll see about what web framework would be best for serving 
 > - <span style="display: inline-flex; align-items: center; gap: 4px;"><a href="https://kit.svelte.dev/">SvelteKit</a> <img src="https://raw.githubusercontent.com/sveltejs/branding/master/svelte-logo.svg" height="20" alt="SvelteKit Logo"/></span>
 > - <span style="display: inline-flex; align-items: center; gap: 4px;"><a href="https://zine-ssg.io/">Zine</a> <img src="https://ziglang.org/img/zig-logo-dark.svg" height="20" alt="Zine Icon"/></span>
 <!-- markdownlint-enable MD033 MD045 -->
+
+## Installation
+
+```bash
+pip install shrive
+```
