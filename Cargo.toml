@@ -10,3 +10,7 @@ pyo3 = { version = "0.18", features = ["extension-module"] }
 
 [lib]
 crate-type = ["cdylib"]
+
+[[bin]]
+name = "shrive"
+path = "src/main.rs"

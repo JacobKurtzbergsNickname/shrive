@@ -1,6 +1,6 @@
 // src/content.rs
 // The module "content" contains the functions that create the table of contents and individual story files.
-use std::fs;
+use std::fs::{self, File};
 use std::io::{self, BufRead, Write};
 use std::path::{Path, PathBuf};
 
@@ -107,4 +107,51 @@ pub fn create_story_files(path: PathBuf, titles: Vec<String>, file_path: &Path) 
     }
 
     Ok(())
+}
+
+
+pub fn extract_file_name(input_file: &Path) -> Result<&str, std::io::Error> {
+    // Define an error closure for invalid paths
+    let invalid_path_err = || io::Error::new(io::ErrorKind::InvalidInput, "Invalid path");
+
+    // Extract the file name from the input path and convert it to a string
+    let file_name = input_file
+        .file_name()
+        .and_then(|name| name.to_str())
+        .ok_or_else(invalid_path_err)?;
+
+    println!("File name: {}", file_name);
+    Ok(file_name)
+}
+
+pub fn extract_contents(file_path: &Path) -> std::io::Result<Vec<String>> {    
+    let file = File::open(file_path)?;
+    let reader = io::BufReader::new(file);
+
+    let mut titles = Vec::new();
+    let mut in_contents = false;
+    let mut empty_lines = 0;
+
+    for line in reader.lines() {
+        let line = line?;
+        if line.trim() == "Contents" {
+            in_contents = true;
+            continue;
+        }
+        if empty_lines >= 2 {
+            break;
+        }
+        if in_contents {
+            if line.trim().is_empty() {
+                empty_lines += 1;
+                continue;
+            }
+            if titles.contains(&line.trim().to_string()) {
+                break;
+            }
+            titles.push(line.trim().to_string());
+        }
+    }
+
+    Ok(titles)
 }

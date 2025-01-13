@@ -4,45 +4,24 @@ use std::fs;
 use std::io;
 use std::path::{Path, PathBuf};
 
-/// The function `create_folder_in_output_dir` takes an input file path, extracts the base name,
+/// The function `create_folder_in_output_dir` takes a file_name, extracts the base name,
 /// converts it to a folder name format, creates a folder in the output directory with that name, and
 /// returns the path to the created folder.
 /// 
 /// Arguments:
 /// 
-/// * `input_file`: The function `create_folder_in_output_dir` takes a reference to a `Path` as input,
-/// which represents the path to a file. The function then extracts the file name from the input path,
+/// * `input_file`: The function `create_folder_in_output_dir` takes file_name as `&str` as input,
 /// processes it to create a folder name, creates a new directory in the "src/output" directory with
 /// 
 /// Returns:
 /// 
 /// The function `create_folder_in_output_dir` returns a `Result` containing a `PathBuf`. The `PathBuf`
 /// represents the path to the newly created folder in the output directory.
-pub fn create_folder_in_output_dir(input_file: &Path) -> io::Result<PathBuf> {
-    let input_file_str = input_file.to_str().ok_or_else(|| io::Error::new(io::ErrorKind::InvalidInput, "Invalid file path"))?;
-    println!("Selected file: {}", input_file_str);
-
-    let file_name = input_file.file_name().ok_or_else(|| io::Error::new(io::ErrorKind::InvalidInput, "Invalid file name"))?
-        .to_str().ok_or_else(|| io::Error::new(io::ErrorKind::InvalidInput, "Invalid file name"))?;
-    println!("File name: {}", file_name);
-
+pub fn create_folder_in_output_dir(file_name: &str) -> io::Result<PathBuf> {
     let base_name = file_name.trim_end_matches(".txt");
     println!("Base name: {}", base_name);
 
-    let folder_name = base_name
-        .replace("_", " ")
-        .split_whitespace()
-        .map(|word| {
-            let mut c = word.chars();
-            match c.next() {
-                None => String::new(),
-                Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
-            }
-        })
-        .collect::<Vec<String>>()
-        .join(" ");
-    println!("Folder name: {}", folder_name);
-
+    let folder_name = build_folder_name(base_name);
     let output_dir = Path::new("src/output").join(folder_name);
     println!("Output directory: {:?}", output_dir);
 
@@ -50,4 +29,27 @@ pub fn create_folder_in_output_dir(input_file: &Path) -> io::Result<PathBuf> {
     println!("Folder created successfully");
 
     Ok(output_dir)
+}
+
+fn build_folder_name(base_name: &str) -> String {
+    let single_words = split_words(base_name);
+    let folder_name = capitalize_words(single_words).join(" ");
+    println!("Folder name: {}", folder_name);
+    return folder_name;
+}
+
+fn split_words(base_name: &str) -> Vec<String> {
+    base_name.replace("_", " ").split_whitespace().map(|s| s.to_string()).collect()
+}
+
+fn capitalize_words(words: Vec<String>) -> Vec<String> {
+    words.iter().map(|word| capitalize_word(word)).collect()
+}
+
+fn capitalize_word(word: &str) -> String {
+    let mut c = word.chars();
+    match c.next() {
+        None => String::new(),
+        Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
+    }
 }
